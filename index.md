@@ -18,4 +18,7 @@
 
 ### 工作
 
-	* 文章连接
+#### CNN网络算子
+
+	* [ROIPooling与ROIAlign](./cnn网络算子/ROIPooling与ROIAlign.md)
+
