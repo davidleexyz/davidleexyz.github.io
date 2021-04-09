@@ -155,6 +155,7 @@ using Creator = ifThenElse(boolean(clonable), CloneCreator<T>, UncloneCreator<T>
 // visitor 设计模式
 // 如果某一个类的继承类种类修改比较少, 但是其接口改变比较频繁就可以使用访问者模式
 // Animal 下有 cat, mouse 两种动物类, Animal 接口有 run, jump 等, 当需要添加 eat 方法时, 那么所有的子类都要去实现这个接口
+/*
 class AnimalVisitor {
   virtual void visit(Cat &cat) = 0;
   virtual void visit(Mouse &mouse) = 0;
@@ -179,8 +180,47 @@ class Cat {
   virtual accept(AnimalVisitor &av) {
     av.visit(*this);
   }
-}
+};
+*/
 
+// 1.6.1
+template <typename T>
+struct SizeOf {
+  constexpr static size_t value = sizeof(T);
+};
+
+// 1.6.2
+template <typename T, size_t N>
+struct IsEqualSize {
+  constexpr static bool value = sizeof(T) == N;
+};
+
+// 1.6.4
+template <typename T>
+struct Outer_ {
+
+  template <typename U>
+  struct Middle_ {
+
+    template <typename V>
+    struct Inner_ {
+    };
+
+    using inner_type = Inner_;
+  };
+
+  using middle_type = Middle_;
+};
+
+// 1.6.6
+
+
+template <int V>
+struct Print {
+  operator char() {
+    return V + 0xFFFF;
+  }
+};
 
 int main()
 {
@@ -196,30 +236,10 @@ int main()
 
   std::cout << eval(sum(integer(3), integer(4), integer(5))) << "\n";
 
-  class Test0 {
-  public:
-    Test0() { std::cout << "clonable object\n"; }
-    Test0* clone() {
-      std::cout << "test0 clone\n";
-      return this;
-    }
-    void print() { std::cout << "print test0\n"; }
-  };
-
-  class Test1 {
-  public:
-    Test1() { std::cout << "unclonable object\n"; }
-    Test1(Test1* obj) { std::cout << "test1 copy\n"; };
-    void print() { std::cout << "print test1\n"; };
-  };
-
-  Test0 t0;
-  Test1 t1;
-
-  auto obj0 = Creator<Test0, true>::create(&t0);
-  //obj0->print();
-  auto obj1 = Creator<Test1, false>::create(&t1);
-  //obj1->print();
+  //char v = Print<SizeOf<int>::value>();
+  //char v = Print<IsEqualSize<int, 8>::value>();
+  std::cout << "Int type size: " << SizeOf<int>::value << "\n";
+  std::cout << "IsEqualSize: " << IsEqualSize<int, 4>::value << "\n";
 
   return 0;
 }
