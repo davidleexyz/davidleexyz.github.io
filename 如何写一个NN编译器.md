@@ -22,3 +22,13 @@ op之间的的联系组成一颗单/多输入输出的树(有向无环图DAG)
 
 ### 量化(quantization)
 将weight和activation从float转到int8的过程叫做量化, 量化是为了加速计算
+
+
+### 后端算子怎么实现
+观点 => 案例 => 总结
+摆观点 => 搭架子 => 填素材
+
+1. TPU 读写寄存器来实现指令 => 封装成低级的算子 (Conv, Eltwise, MatMul等)
+2. 各种shape的 input 做 tiling 放到 TPU LocalMem 并行执行
+
+举个例子
