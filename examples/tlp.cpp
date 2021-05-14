@@ -195,31 +195,19 @@ struct IsEqualSize {
   constexpr static bool value = sizeof(T) == N;
 };
 
-// 1.6.4
-template <typename T>
-struct Outer_ {
 
-  template <typename U>
-  struct Middle_ {
+class Test {
+public:
+  Test() = default;
+  ~Test() = default;
 
-    template <typename V>
-    struct Inner_ {
-    };
+  template <typename T, typename = std::enable_if<std::is_convertible<T, std::string>::value>>
+  Test(T t) : test(t) { std::cout << "template constructor\n"; }
 
-    using inner_type = Inner_;
-  };
-
-  using middle_type = Middle_;
-};
-
-// 1.6.6
-
-
-template <int V>
-struct Print {
-  operator char() {
-    return V + 0xFFFF;
-  }
+  Test(const Test &t) : test(t.test) { std::cout << "const copy constructor\n"; }
+  Test(Test &&t) : test(std::move(t.test)) { std::cout << "move constructor\n"; }
+private:
+  std::string test;
 };
 
 int main()
@@ -241,5 +229,10 @@ int main()
   std::cout << "Int type size: " << SizeOf<int>::value << "\n";
   std::cout << "IsEqualSize: " << IsEqualSize<int, 4>::value << "\n";
 
+  Test t1("test");
+
+  Test t2(t1);
+
+  Test t3(std::move(t2));
   return 0;
 }
