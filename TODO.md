@@ -75,3 +75,11 @@ r = (q - zp) * s => zp = qmax - rmax / s
  => 计算每一层 int8 activation dequant后与原始fp32的cosin相似度
 
 ### QAT
+1. create training graph
+2. training with sub dataset and don't enable quant
+3. collect range of activation
+4. init quantizer op with scale, zero point, min, max
+5. do forward with quantization and dequantization for output
+6. update activation range using exponetial moving average (Vt = beta * Vt-1 + (1-beta) * θt)
+7. do backward and update weight
+8. repeat 4 to 7
