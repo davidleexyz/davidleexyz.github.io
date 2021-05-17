@@ -74,6 +74,7 @@ r = (q - zp) * s => zp = qmax - rmax / s
 3. 固定Sw, 搜索Sa  [alpha* Sa, beta * Sa] alpha = 0.2, beta = 3
  => 计算每一层 int8 activation dequant后与原始fp32的cosin相似度
 
+
 ### QAT
 1. create training graph
 2. training with sub dataset and don't enable quant
