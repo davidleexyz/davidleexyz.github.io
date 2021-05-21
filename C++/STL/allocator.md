@@ -1,2 +1,2 @@
-### C++ STL的空间配置器(Allocator)
+### STL的空间配置器(Allocator)
 
