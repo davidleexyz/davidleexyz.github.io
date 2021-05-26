@@ -7,7 +7,7 @@
 namespace mystl {
 
 template <typename T>
-class Vector {
+class vector {
 public:
   // 应该从allocator中获取T类型
   using value_type = T;
@@ -29,9 +29,17 @@ private:
   iterator cap_;
 
 public:
-  Vector();
-  ~Vector();
+  vector();
+  vector(iterator begin, iterator end);
+  vector(const vector& v); //copy constructor
+  vecotr(vector&& v); //move constructor
+  vector(iterator begin, size_type size);
+  vector(std::initializer_list<value_type>& list);
+  ~vector();
 
+  vector& operator=(const vector& v); //copy assignment
+  vector& operator=(vector&& v); //move assignment
+  reference operator[](size_type i);
 };
 
 };
