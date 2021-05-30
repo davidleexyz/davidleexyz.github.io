@@ -1,3 +1,30 @@
+### MLIR编译器
+1. op fusion (batchnorm -> scale -> convolution)
+=> batchnorm ((x - mean) / sqrt(variance)) =>  [r/sqrt(variance) * x + (-mean*r/sqrt(variance))] + beta
+=> r' = r / sqrt(variance)  b' = (-mean*r) / sqrt(variance) + beta
+=> y = x * w + b => dwconv => kernel (oc, ic, 1, 1)
+
+2. op transform (upsample -> deconvolution)
+
+3. layer group
+=> 类似于ir graph做tiling (n, c, h, w) => (n, c, h', w) => (n, c, h2, w2) output address
+
+4. TPU结构 (32 NPU, 16 EU)
+
+5. 如何计算欧式距离 (sqrt(sum(sqare(X1 - X2)))
+input (1, 1, 1, 256) => broadcast (1, 32, 1, 256)
+database(1, 1, 1024, 256) => 32 * load (1, 32, 1, 256)
+=> output = input - database =>  (ifmap, weight)  dwconv => (1, 32, 1, 1)
+
+6. 如何计算consine距离
+input (1, 1, 1, 256)
+database(1, 1, 1024, 256)
+=> 1024 * (matrix mul) (input * database(1, 1, i, 256)) => x1*x2 + y1*y2
+=> l2norm(input) * l2norm(database(1, 1, 1, 256))
+
+7. Yolov3后处理
+(255, 13, 13) => 13*13*(4+1+80)*3
+
 ### Smooth Streaming
 manifest
 duration, chunks, video, audio
