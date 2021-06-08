@@ -88,7 +88,7 @@ r = (q - zp) * s => zp = qmax - rmax / s
 稀疏化 / filter pruning
 
 - mangnitude ->  threshold (search) -> set to zero -> fine tuning
-- l0 -> traing的时候 加上l0 惩罚项 -> weight 会更稀疏
+- l0 -> training的时候 加上l0 惩罚项 -> weight 会更稀疏
 
 - l1 / l2 算每个filter channel 与其它 filter channel 的 l1 和 l2 距离
 
