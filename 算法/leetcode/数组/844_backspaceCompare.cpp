@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 
+// Medium
 // 带backspace的比较 双指针并且记录需要忽略的字符数量
 // 反向遍历并且记录skip count
 // 1. 如果当前字符是# 则count++, index--

@@ -1,5 +1,6 @@
 #include <vector>
 
+// Medium
 class Solution {
 public:
     std::vector<int> sortedSquares(std::vector<int>& nums) {

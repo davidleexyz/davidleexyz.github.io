@@ -1,5 +1,6 @@
 #include <vector>
 
+// [Easy]
 // 删除有序数组中重复的元素
 class Solution {
   int removeDumplicates(std::vector<int> nums) {
