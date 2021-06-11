@@ -25,6 +25,22 @@ database(1, 1, 1024, 256)
 7. Yolov3后处理
 (255, 13, 13) => 13*13*(4+1+80)*3
 
+8. Value/Type/Attribute  type_traits
+
+input [OpOperand包含Value] => Operation => output [OpResult继承value]
+因为OpOperand 包含的Value 其实就是 OpResult
+
+OpOperand的owner就是定义它的Operation
+OpResult的owner就是生成它的Operation
+
+MLIR组织形式 Operation -> Block -> Function -> Module
+
+在td文件中的定义的Op继承于class Op 然后在 OperationState中记录op的params-> 在Operation构造函数中
+根据OperationState的内容创建Operation 
+
+
+
+
 ### Smooth Streaming
 manifest
 duration, chunks, video, audio
