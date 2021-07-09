@@ -3,13 +3,15 @@
 template <typename T>
 class LinkedList {
   struct ListNode;
+  friend class Iterator;
 public:
   LinkedList() : head(nullptr), size(0) {}
   ~LinkedList();
 
   class Iterator {
   public:
-    Iterator() : mNode(head) {};
+    Iterator() : mNode(head) {}
+    Iterator(ListNode* node) : mNode(node) {}
     ~Iterator() = default;
 
     Iterator& operator=(ListNode* node) {
@@ -18,7 +20,7 @@ public:
     }
 
     Iterator& operator++() {
-      if (mNode) {
+      if (mNode) { 
         mNode = mNode->next;
       }
       return *this;
@@ -32,11 +34,6 @@ public:
       return mNode->value;
     }
 
-    ListNode* operator->() {
-      return mNode;
-    }
-
-  private:
     ListNode* mNode;
   };
 
@@ -50,10 +47,20 @@ public:
 
   void push_back(const T& value) {
     auto iter = begin();
-    while (iter->mNode->next != nullptr) {
+    if (iter.mNode == nullptr) {
+      iter.mNode = new ListNode(value);
+      return;
+    }
+
+    if (iter.mNode->next == nullptr) {
+      iter.mNode->next = new ListNode(value);
+      return;
+    }
+
+    while (iter.mNode->next != nullptr) {
       ++iter;
     }
-    ListNode* tmp = ListNode(value);
+    ListNode* tmp = new ListNode(value);
     iter.mNode->next = tmp;
     size++;
   }
@@ -80,6 +87,15 @@ private:
   ListNode* head;
   size_t size;
 };
+
+template <typename T>
+LinkedList<T>::~LinkedList() {
+  for (auto iter = begin(); iter != end();) {
+    ListNode* tmp = iter.mNode;
+    ++iter;
+    delete tmp;
+  }
+}
 
 int main() {
   LinkedList<int> list;
