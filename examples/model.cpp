@@ -89,6 +89,11 @@ public:
 
 // 初始化列表的执行顺序是和成员变量的声明顺序来执行的
 
+
+class Empty {
+
+};
+
 int main() {
   A a;
   B b;
@@ -112,6 +117,9 @@ int main() {
 
   D d;
   std::cout << "D size: " << sizeof(d) << "\n";
+
+  Empty empty;
+  std::cout << "empty size:" << sizeof(empty) << "\n";
 
   return 0;
 }
